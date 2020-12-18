@@ -278,6 +278,23 @@ MC_ErrorCode FbReset::onAxisTriggered(bool& isDone)
 
 ////////////////////////////////////////////////////////////
 
+MC_ErrorCode FbSetPosition::onAxisTriggered(bool& isDone)
+{
+    if(mRelative) {
+        mAxis->setHomePosition(mAxis->homePosition() + mPosition);
+    } else {
+        mAxis->setHomePosition(
+            -(mSource == MC_SOURCE_SETVALUE? 
+            mAxis->AxisBase::cmdPosition(): 
+            mAxis->AxisBase::actPosition()) + 
+            mPosition);
+    }
+    isDone = true;
+    return MC_ERRORCODE_GOOD;
+}
+
+////////////////////////////////////////////////////////////
+
 MC_ErrorCode FbReadActualPosition::onAxisEnable(bool& isDone)
 {
     mPosition = mAxis->actPosition();

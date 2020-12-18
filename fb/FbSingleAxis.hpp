@@ -207,6 +207,17 @@ typedef enum {
     MC_PARAMETER_MAXJERKAPPL            = 17,
 }MC_Parameter;
 
+class FbSetPosition : public FbWriteInfoAxisType
+{
+public:
+    FB_INPUT LREAL mPosition = 0;
+    FB_INPUT BOOL mRelative = false;
+    FB_INPUT MC_SOURCE mSource = MC_SOURCE_SETVALUE;
+    
+public:
+    MC_ErrorCode onAxisTriggered(bool& isDone);
+};
+
 class FbReadActualPosition : public FbReadInfoAxisType
 {
 public:
